@@ -13,6 +13,7 @@ media(mediaQuery);
 function media(mq) {
     document.querySelector('.header__search-btn').addEventListener('click',function(){
     document.querySelector('.header__search').classList.toggle('search_active')
+    document.querySelector('#search').value = "";
   })
 }
 

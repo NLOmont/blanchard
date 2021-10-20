@@ -33,15 +33,17 @@ window.addEventListener('DOMContentLoaded', function() {
     })
 })
 
-mediaMobile = window.matchMedia('(max-width: 500px)');
-
 function peopleLinksMobile() {
-    if (mediaMobile.matches) {
+    if (window.matchMedia('(max-width: 500px)').matches) {
         document.querySelectorAll('.section-catalog__people-btn').forEach(function(person) {
                 person.setAttribute("href", "#person")
         });
+    } else {
+        document.querySelectorAll('.section-catalog__people-btn').forEach(function(person) {
+            person.removeAttribute("href") 
+    })
     }
 }
 
-mediaMobile.addListener(peopleLinksMobile);
-peopleLinksMobile(mediaMobile);
+window.addEventListener("resize", peopleLinksMobile); 
+window.addEventListener("load", peopleLinksMobile);

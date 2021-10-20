@@ -46,60 +46,20 @@ gallerySwiper = new Swiper('.section-gallery__swiper-container', {
       slidesPerView: 2,
       spaceBetween: 10,
       slidesPerGroup: 2,
+      slidesPerColumn: 2,
     },
 
     636: {
       slidesPerView: 2,
       spaceBetween: 30,
       slidesPerGroup: 2,
+      slidesPerColumn: 2,
     },
 
     1521: {
       slidesPerView: 3,
       slidesPerGroup: 2,
-    },
-  }
-});
-
-editionsSwiper = new Swiper('.section-editions__swiper-container', {
-  // Optional parameters
-  direction: 'horizontal',
-  hideOnClick: true,
-  spaceBetween: 50,
-  
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-    type: 'fraction',
-  },
-
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-
-  autoHeright: false,
-
-  slidesPerView: 3,
-
-  initialSlide: 0,
-
-  breakpoints: {
-    750: {
-      slidesPerView: 2,
-      spaceBetween: 34,
-      slidesPerGroup: 2,
-      },
-
-    981: {
-      slidesPerView: 2,
-      spaceBetween: 49,
-      slidesPerGroup: 2,
-    },
-
-    1370: {
-      slidesPerView: 3,
-      slidesPerGroup: 3,
+      slidesPerColumn: 2,
     },
   }
 });
@@ -243,14 +203,12 @@ window.addEventListener('DOMContentLoaded', function() {
   document.querySelector('.section-editions__swiper-btn-prev').setAttribute('aria-label', "Предыдущий слайд");
   document.querySelector('.section-projects__swiper-btn-next').setAttribute('aria-label', "Следующий слайд");
   document.querySelector('.section-projects__swiper-btn-prev').setAttribute('aria-label', "Предыдущий слайд");
-})
+});
 
 
 // Media mobile
-let mediaSwipers = window.matchMedia("(max-width: 750px)")
-
 function swipers() {
-  if (mediaSwipers.matches) {
+  if (window.matchMedia("(max-width: 750px)").matches) {
     document.querySelector('.section-events__list').classList.add('swiper-wrapper');
     document.querySelectorAll('.section-events__item').forEach((event) => event.classList.add('swiper-slide'));
     document.querySelector('.section-editions__swiper-container').classList.remove('swiper-container');
@@ -259,14 +217,65 @@ function swipers() {
   } else {
     document.querySelector('.section-events__list').classList.remove('swiper-wrapper');
     document.querySelectorAll('.section-events__item').forEach((event) => event.classList.remove('swiper-slide'));
+    document.querySelector('.section-editions__swiper-container').classList.add('swiper-container');
+    document.querySelector('.section-editions__list').classList.add('swiper-wrapper');
+    document.querySelectorAll('.section-editions__item').forEach((edition) => edition.classList.add('swiper-slide'));
   }
 }
 
-mediaSwipers.addListener(swipers);
-swipers(mediaSwipers);
+window.addEventListener("resize", swipers); 
+window.addEventListener("load", swipers);
 
-var eventsSwiper = null;
-var mediaQuerySize = 750;
+let eventsSwiper = null;
+let editionsSwiper = null;
+let mediaQuerySize = 750;
+
+function editionsSwiperInit () {
+  if (!editionsSwiper) {
+    editionsSwiper = new Swiper('.section-editions__swiper-container', {
+      // Optional parameters
+      direction: 'horizontal',
+      hideOnClick: true,
+      spaceBetween: 50,
+      
+      // If we need pagination
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'fraction',
+      },
+    
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    
+      autoHeright: false,
+    
+      slidesPerView: 3,
+    
+      initialSlide: 0,
+    
+      breakpoints: {
+        750: {
+          slidesPerView: 2,
+          spaceBetween: 34,
+          slidesPerGroup: 2,
+          },
+    
+        981: {
+          slidesPerView: 2,
+          spaceBetween: 49,
+          slidesPerGroup: 2,
+        },
+    
+        1370: {
+          slidesPerView: 3,
+          slidesPerGroup: 3,
+        },
+      }
+    });
+  }
+}
 
 function eventsSwiperInit () {
   if (!eventsSwiper) {
@@ -304,18 +313,17 @@ $(window).on('load resize', function () {
   // Если ширина экрана меньше или равна mediaQuerySize(750)
   if (windowWidth <= mediaQuerySize) {
     // Инициализировать слайдер если он ещё не был инициализирован
-    eventsSwiperInit()
-    editionsSwiperDestroy()
+    eventsSwiperInit();
+    editionsSwiperDestroy();
   } else {
     // Уничтожить слайдер если он был инициализирован
-    eventsSwiperDestroy()
+    eventsSwiperDestroy();
+    editionsSwiperInit();
   }
 });
 
-let mediaMobile = window.matchMedia('(max-width: 500px)');
-
 function choicesMobile() {
-  if (mediaMobile.matches) {
+  if (window.matchMedia('(max-width: 500px)').matches) {
     choicesGallery.clearChoices();
     choicesGallery.setValue([
       { value: 'Техника'},
@@ -325,5 +333,5 @@ function choicesMobile() {
   }
 }
 
-mediaMobile.addListener(choicesMobile);
-choicesMobile(mediaMobile);
+window.addEventListener("resize", choicesMobile); 
+window.addEventListener("load", choicesMobile);

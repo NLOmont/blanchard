@@ -6,7 +6,7 @@ $(document).ready(function() {
       $('.section-editions__checkbox:checked').parent().slideUp(100).removeClass('btn-close');
     }
 
-      $('.section-editions__form-select').click(function(){
+      $('.section-editions__form-select').click(function() {
         $('.section-editions__form-list').toggleClass('form-active');
       let ul = $(this).toggleClass('section-editions__form-select_active').next('.section-editions__form-list');
       let itemList = ul.find($('.section-editions__form-item'));
@@ -20,7 +20,6 @@ $(document).ready(function() {
     })
     
       $('.section-editions__label').click(function() {
-
       $(this).parent().slideUp(100).removeClass('btn-close');
     })
   }
